@@ -21,7 +21,7 @@ const helpData = [
   },
   {
     name: 'Anzahl Variationen',
-    description: '<b>Besonderheit:</b> Die eingegebene Anzahl an Variationen wird direkt zu den Gesamtpunkten addiert.',
+    description: 'Die eingegebene Anzahl an Variationen wird direkt zu den Gesamtpunkten addiert.',
   },
   {
     name: 'Strenges Prozess-SLA',
@@ -37,7 +37,7 @@ const helpData = [
   },
   {
     name: 'Document Understanding/AI',
-    description: 'Nein: 0 Punkte<br/><b>Besonderheit:</b> "Ja" addiert 9 Punkte direkt zu den Gesamtpunkten.',
+    description: 'Nein: 0 Punkte<br/>"Ja" addiert 9 Punkte direkt zu den Gesamtpunkten.',
   }
 ];
 
