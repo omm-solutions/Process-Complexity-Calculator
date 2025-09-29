@@ -50,7 +50,7 @@ export const INITIAL_CRITERIA = [
   {
     id: 2,
     name: 'Anzahl Anwendungen',
-    description: '0-3 / 4-5 / 6+',
+    description: 'Anzahl der verschiedenen Applikationen, mit denen während des Prozesses interagiert wird (z.B. SAP, Excel, Webbrowser).',
     inputType: 'number',
     value: 0,
     getRating: (value) => {
@@ -91,7 +91,7 @@ export const INITIAL_CRITERIA = [
   {
     id: 5,
     name: 'Anzahl Variationen',
-    description: '0-2 / 3-5 / 6+',
+    description: 'Anzahl der unterschiedlichen Pfade oder Zweige, die der Prozess basierend auf Geschäftsregeln nehmen kann.',
     inputType: 'number',
     value: 0,
     getRating: (value) => {
