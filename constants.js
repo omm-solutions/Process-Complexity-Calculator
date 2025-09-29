@@ -15,7 +15,7 @@ export const RATING_STYLES = {
 };
 
 export const COMPLEXITY_THRESHOLDS = [
-  { level: 'Hoch', minScore: 17, color: 'text-red-700', bgColor: 'bg-red-100' },
+  { level: 'Hoch', minScore: 16, color: 'text-red-700', bgColor: 'bg-red-100' },
   { level: 'Mittel', minScore: 10, color: 'text-yellow-700', bgColor: 'bg-yellow-100' },
   { level: 'Niedrig', minScore: 0, color: 'text-green-700', bgColor: 'bg-green-100' },
 ];

@@ -20,6 +20,12 @@ function App() {
       if (criterion.id === 5) {
         return acc + Number(criterion.value);
       }
+      
+      // Special scoring for 'Document Understanding/AI' (id: 9)
+      if (criterion.id === 9 && criterion.value === 'Ja') {
+        return acc + 9;
+      }
+
       const rating = criterion.getRating(criterion.value);
       return acc + (POINTS_CONFIG[rating] || 0);
     }, 0);
