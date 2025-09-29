@@ -1,6 +1,7 @@
 // constants.js
 
 export const POINTS_CONFIG = {
+  'Keine': 0,
   'Niedrig': 1,
   'Mittel': 2,
   'Hoch': 3,
@@ -8,6 +9,7 @@ export const POINTS_CONFIG = {
 };
 
 export const RATING_STYLES = {
+    'Keine': { text: 'text-gray-500', bg: 'bg-gray-200' },
     'Niedrig': { text: 'text-green-700', bg: 'bg-green-100' },
     'Mittel': { text: 'text-yellow-700', bg: 'bg-yellow-100' },
     'Hoch': { text: 'text-red-700', bg: 'bg-red-100' },
@@ -27,7 +29,7 @@ export const INITIAL_CRITERIA = [
     name: 'Definition',
     description: 'Regelbasiert vs. HITL',
     inputType: 'select',
-    value: 'Niedrig',
+    value: '',
     options: [
         { 
             value: 'Niedrig', 
@@ -45,7 +47,7 @@ export const INITIAL_CRITERIA = [
             detailedDescription: 'Prozesse haben Übergaben zwischen Teilprozessen, und die Verknüpfungen müssen genau verwaltet werden. Prozesse mit HITL (Human-in-the-loop) Anforderungen. Unstrukturierte Eingaben.'
         },
     ],
-    getRating: (value) => value,
+    getRating: (value) => value || 'Keine',
   },
   {
     id: 2,
@@ -55,6 +57,7 @@ export const INITIAL_CRITERIA = [
     value: 0,
     getRating: (value) => {
       const num = Number(value);
+      if (num === 0) return 'Keine';
       if (num < 4) return 'Niedrig';
       if (num < 6) return 'Mittel';
       return 'Hoch';
@@ -68,6 +71,7 @@ export const INITIAL_CRITERIA = [
     value: 0,
     getRating: (value) => {
       const num = Number(value);
+      if (num === 0) return 'Keine';
       if (num < 20) return 'Niedrig';
       if (num < 40) return 'Mittel';
       if (num < 60) return 'Hoch';
@@ -82,6 +86,7 @@ export const INITIAL_CRITERIA = [
     value: 0,
     getRating: (value) => {
       const num = Number(value);
+      if (num === 0) return 'Keine';
       if (num <= 10) return 'Niedrig';
       if (num <= 30) return 'Mittel';
       if (num <= 50) return 'Hoch';
@@ -96,6 +101,7 @@ export const INITIAL_CRITERIA = [
     value: 0,
     getRating: (value) => {
       const num = Number(value);
+      if (num === 0) return 'Keine';
       if (num < 3) return 'Niedrig';
       if (num < 6) return 'Mittel';
       return 'Hoch';
@@ -106,33 +112,44 @@ export const INITIAL_CRITERIA = [
     name: 'Strenges Prozess-SLA',
     description: 'Gibt es eine strenge Service-Level-Vereinbarung?',
     inputType: 'select',
-    value: 'Nein',
+    value: '',
      options: [
+        { value: '', label: 'Bitte wählen...' },
         { value: 'Nein', label: 'Nein' },
         { value: 'Ja', label: 'Ja' },
     ],
-    getRating: (value) => (value === 'Ja' ? 'Hoch' : 'Niedrig'),
+    getRating: (value) => {
+        if (value === 'Ja') return 'Hoch';
+        if (value === 'Nein') return 'Niedrig';
+        return 'Keine';
+    },
   },
   {
     id: 7,
     name: 'Bildbasierte Automatisierung',
     description: 'Erfordert der Prozess eine bildbasierte Automatisierung (z.B. VDI/Citrix)?',
     inputType: 'select',
-    value: 'Nein',
+    value: '',
     options: [
+        { value: '', label: 'Bitte wählen...' },
         { value: 'Nein', label: 'Nein' },
         { value: 'Ja', label: 'Ja' },
     ],
-    getRating: (value) => (value === 'Ja' ? 'Hoch' : 'Niedrig'),
+    getRating: (value) => {
+        if (value === 'Ja') return 'Hoch';
+        if (value === 'Nein') return 'Niedrig';
+        return 'Keine';
+    },
   },
   {
     id: 8,
     name: 'Anzahl Eingabeformate',
-    description: '2-3 / 4-5 / 6+',
+    description: 'Geben Sie die Anzahl der verschiedenen Formate an, in denen die Eingabedaten vorliegen (z.B. PDF, E-Mail, Excel, CSV).',
     inputType: 'number',
     value: 0,
     getRating: (value) => {
       const num = Number(value);
+      if (num === 0) return 'Keine';
       if (num < 4) return 'Niedrig';
       if (num < 6) return 'Mittel';
       return 'Hoch';
@@ -143,11 +160,16 @@ export const INITIAL_CRITERIA = [
     name: 'Document Understanding/AI',
     description: 'Wird eine KI-basierte Dokumentenverarbeitung benötigt?',
     inputType: 'select',
-    value: 'Nein',
+    value: '',
     options: [
+        { value: '', label: 'Bitte wählen...' },
         { value: 'Nein', label: 'Nein' },
         { value: 'Ja', label: 'Ja' },
     ],
-    getRating: (value) => (value === 'Ja' ? 'Hoch' : 'Niedrig'),
+    getRating: (value) => {
+        if (value === 'Ja') return 'Hoch';
+        if (value === 'Nein') return 'Niedrig';
+        return 'Keine';
+    },
   },
 ];
