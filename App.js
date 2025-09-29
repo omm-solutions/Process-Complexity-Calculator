@@ -1,15 +1,14 @@
-
 import React, { useState, useMemo } from 'react';
 import { INITIAL_CRITERIA, POINTS_CONFIG, RATING_STYLES, COMPLEXITY_THRESHOLDS } from './constants.js';
 
 const helpData = [
   {
     name: 'Definition',
-    description: 'Regelbasiert: Niedrig (1 Pkt)<br/>Beaufsichtigt / Binär: Mittel (2 Pkt)<br/>Human-in-the-Loop: Hoch (3 Pkt)',
+    description: 'Regelbasiert: 0 Pkt<br/>Human-in-the-Loop: 5 Pkt',
   },
   {
     name: 'Anzahl Anwendungen',
-    description: '&lt; 4: Niedrig (1 Pkt)<br/>4-5: Mittel (2 Pkt)<br/>≥ 6: Hoch (3 Pkt)',
+    description: '&lt; 2: Niedrig (1 Pkt)<br/>2-4: Mittel (5 Pkt)<br/>≥ 5: Hoch (9 Pkt)',
   },
   {
     name: 'Datenfelder zu extrahieren',
@@ -24,16 +23,12 @@ const helpData = [
     description: 'Die eingegebene Anzahl an Variationen wird direkt zu den Gesamtpunkten addiert.',
   },
   {
-    name: 'Strenges Prozess-SLA',
-    description: 'Nein: Niedrig (1 Pkt)<br/>Ja: Hoch (3 Pkt)',
-  },
-  {
     name: 'Bildbasierte Automatisierung',
-    description: 'Nein: Niedrig (1 Pkt)<br/>Ja: Hoch (3 Pkt)',
+    description: 'Nein: Niedrig (0 Pkt)<br/>Ja: Hoch (9 Pkt)',
   },
   {
     name: 'Anzahl Eingabeformate',
-    description: '&lt; 4: Niedrig (1 Pkt)<br/>4-5: Mittel (2 Pkt)<br/>≥ 6: Hoch (3 Pkt)',
+    description: 'Die eingegebene Anzahl an Eingabeformaten wird direkt zu den Gesamtpunkten addiert.',
   },
   {
     name: 'Document Understanding/AI',
@@ -128,22 +123,59 @@ function App() {
     return criteria.reduce((acc, criterion) => {
       let pointsToAdd = 0;
 
-      // Special scoring for 'Anzahl Variationen' (id: 5)
-      if (criterion.id === 5) {
-        pointsToAdd = Number(criterion.value);
-      }
-      // Special scoring for 'Document Understanding/AI' (id: 9)
-      else if (criterion.id === 9) {
-        if (criterion.value === 'Ja') {
-          pointsToAdd = 9;
-        } else { // Handles 'Nein' and the initial empty state
-          pointsToAdd = 0;
-        }
-      }
-      // Standard scoring for all others
-      else {
-        const rating = criterion.getRating(criterion.value);
-        pointsToAdd = POINTS_CONFIG[rating] || 0;
+      switch (criterion.id) {
+        // Definition: Regelbasiert vs. HITL
+        case 1:
+          if (criterion.value === 'Human-in-the-Loop') {
+            pointsToAdd = 5;
+          } else { // Regelbasiert or empty
+            pointsToAdd = 0;
+          }
+          break;
+
+        // Anzahl Anwendungen
+        case 2:
+          const numApps = Number(criterion.value);
+          if (numApps >= 5) {
+            pointsToAdd = 9;
+          } else if (numApps >= 2) { // Covers 2, 3, 4
+            pointsToAdd = 5;
+          } else if (numApps > 0) { // Covers 1
+            pointsToAdd = 1;
+          } else {
+            pointsToAdd = 0;
+          }
+          break;
+        
+        // 1:1 scoring for Variationen and Eingabeformate
+        case 5:
+        case 8:
+          pointsToAdd = Number(criterion.value);
+          break;
+
+        // Bildbasierte Automatisierung
+        case 7:
+          if (criterion.value === 'Ja') {
+            pointsToAdd = 9;
+          } else { // 'Nein' or empty
+            pointsToAdd = 0;
+          }
+          break;
+
+        // Document Understanding/AI
+        case 9:
+          if (criterion.value === 'Ja') {
+            pointsToAdd = 9;
+          } else { // 'Nein' or empty
+            pointsToAdd = 0;
+          }
+          break;
+
+        // Standard scoring for all other criteria
+        default:
+          const rating = criterion.getRating(criterion.value);
+          pointsToAdd = POINTS_CONFIG[rating] || 0;
+          break;
       }
       
       return acc + pointsToAdd;
@@ -151,9 +183,14 @@ function App() {
   }, [criteria]);
 
   const complexity = useMemo(() => {
+    const isImageBased = criteria.find(c => c.id === 7)?.value === 'Ja';
+    // The find method on COMPLEXITY_THRESHOLDS is safe as the array is hardcoded.
+    if (isImageBased) {
+        return COMPLEXITY_THRESHOLDS.find(t => t.level === 'Hoch');
+    }
     // The thresholds are sorted from high to low, so the first match is correct.
     return COMPLEXITY_THRESHOLDS.find(t => totalScore >= t.minScore) || COMPLEXITY_THRESHOLDS[COMPLEXITY_THRESHOLDS.length - 1];
-  }, [totalScore]);
+  }, [totalScore, criteria]);
 
   // Special handling for the 'Definition' criterion to render as cards
   const definitionCriterion = criteria.find(c => c.id === 1);
@@ -184,7 +221,7 @@ function App() {
           React.createElement("div", { className: "bg-white p-6 rounded-xl shadow-sm border border-gray-100" },
             React.createElement("h2", { className: "text-xl font-semibold text-gray-900 mb-1" }, definitionCriterion.name),
             React.createElement("p", { className: "text-sm text-gray-500 mb-4" }, definitionCriterion.description),
-            React.createElement("div", { className: "grid grid-cols-1 md:grid-cols-3 gap-4" },
+            React.createElement("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-4" },
               definitionCriterion.options.map(option => {
                 const isSelected = definitionCriterion.value === option.value;
                 return React.createElement("button", {

@@ -27,27 +27,26 @@ export const INITIAL_CRITERIA = [
   {
     id: 1,
     name: 'Definition',
-    description: 'Regelbasiert vs. HITL',
+    description: 'Regelbasiert oder Human in the Loop',
     inputType: 'select',
     value: '',
     options: [
         { 
-            value: 'Niedrig', 
+            value: 'Regelbasiert', 
             label: 'Regelbasiert', 
-            detailedDescription: 'Der Prozess verwendet einfache, regelbasierte, streng definierte Automatisierungen, die Dateneingaben sind strukturiert. Der Prozess hat keine manuellen nicht-digitalen Eingaben (wie gescannte Bilder, unstrukturierte, handschriftliche Dokumente usw.), bei denen eine menschliche Entscheidung erforderlich ist.' 
+            detailedDescription: 'Der Prozess verwendet einfache, streng definierte Automatisierungen und die Dateneingaben sind strukturiert.' 
         },
         { 
-            value: 'Mittel', 
-            label: 'Beaufsichtigt / Binär',
-            detailedDescription: 'Der Prozess hat maximal einfache binäre Entscheidungsschritte (Ja/Nein usw.). Der Prozess erfordert möglicherweise eine beaufsichtigte Version der Automatisierung.'
-        },
-        { 
-            value: 'Hoch', 
+            value: 'Human-in-the-Loop', 
             label: 'Human-in-the-Loop',
-            detailedDescription: 'Prozesse haben Übergaben zwischen Teilprozessen, und die Verknüpfungen müssen genau verwaltet werden. Prozesse mit HITL (Human-in-the-loop) Anforderungen. Unstrukturierte Eingaben.'
+            detailedDescription: 'Prozesse haben Übergaben, HITL-Anforderungen oder unstrukturierte Eingaben, die menschliche Entscheidungen erfordern.'
         },
     ],
-    getRating: (value) => value || 'Keine',
+    getRating: (value) => {
+        if (value === 'Regelbasiert') return 'Niedrig';
+        if (value === 'Human-in-the-Loop') return 'Hoch';
+        return 'Keine';
+    },
   },
   {
     id: 2,
@@ -58,8 +57,8 @@ export const INITIAL_CRITERIA = [
     getRating: (value) => {
       const num = Number(value);
       if (num === 0) return 'Keine';
-      if (num < 4) return 'Niedrig';
-      if (num < 6) return 'Mittel';
+      if (num < 2) return 'Niedrig';
+      if (num < 5) return 'Mittel';
       return 'Hoch';
     },
   },
@@ -105,23 +104,6 @@ export const INITIAL_CRITERIA = [
       if (num < 3) return 'Niedrig';
       if (num < 6) return 'Mittel';
       return 'Hoch';
-    },
-  },
-  {
-    id: 6,
-    name: 'Strenges Prozess-SLA',
-    description: 'Gibt es eine strenge Service-Level-Vereinbarung?',
-    inputType: 'select',
-    value: '',
-     options: [
-        { value: '', label: 'Bitte wählen...' },
-        { value: 'Nein', label: 'Nein' },
-        { value: 'Ja', label: 'Ja' },
-    ],
-    getRating: (value) => {
-        if (value === 'Ja') return 'Hoch';
-        if (value === 'Nein') return 'Niedrig';
-        return 'Keine';
     },
   },
   {
