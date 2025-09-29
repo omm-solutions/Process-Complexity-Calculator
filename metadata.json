@@ -1,0 +1,5 @@
+{
+  "name": "Process Complexity Calculator",
+  "description": "An interactive web application to calculate the overall complexity of a process based on user-selected values for various criteria, replicating the logic of an Excel spreadsheet in a modern UI.",
+  "requestFramePermissions": []
+}
