@@ -8,4 +8,6 @@ Der Rechner ermöglicht es, schnell eine Einschätzung über den zu erwartenden 
 
 Der Code für dieses Projekt wird transparent von der **OMM Solutions GmbH** zur Verfügung gestellt.
 
+Die Anwendung steht unter folgender URL als Applikation zur Verfügung: [https://github.com/omm-solutions/Process-Complexity-Calculator](https://github.com/omm-solutions/Process-Complexity-Calculator)
+
 Besuchen Sie uns unter: [http://omm-solutions.de/](http://omm-solutions.de/)
