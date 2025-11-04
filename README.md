@@ -1,20 +1,11 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# RPA Komplexitätsrechner
 
-# Run and deploy your AI Studio app
+Dieses Projekt ist eine interaktive Webanwendung zur Berechnung der Gesamtkomplexität eines zu automatisierenden Prozesses. Basierend auf den vom Benutzer ausgewählten Werten für verschiedene Kriterien, repliziert die Anwendung die Logik einer Excel-Tabelle in einer modernen und benutzerfreundlichen Oberfläche.
 
-This contains everything you need to run your app locally.
+Der Rechner ermöglicht es, schnell eine Einschätzung über den zu erwartenden Automatisierungsaufwand zu erhalten und dient als Grundlage für weitere Planungen.
 
-View your app in AI Studio: https://ai.studio/apps/drive/1Nx0JePlptaz1g1pu_hm1SHrs0SqTxlxy
+## Bereitstellung
 
-## Run Locally
+Der Code für dieses Projekt wird transparent von der **OMM Solutions GmbH** zur Verfügung gestellt.
 
-**Prerequisites:**  Node.js
-
-
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+Besuchen Sie uns unter: [http://omm-solutions.de/](http://omm-solutions.de/)
